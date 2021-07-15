@@ -295,6 +295,7 @@ def extract_hobbies(text):
 
 
     record5 = 'involments'
+    
     if record5:
         text1 = re.findall(record5, test_str, flags=re.IGNORECASE)
         if text1:
