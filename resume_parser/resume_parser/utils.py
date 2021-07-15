@@ -1,8 +1,10 @@
 # Author: Omkar Pathak
-
+import calendar
+import re
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 import io
 import os
-import re
 import nltk
 import spacy
 import pandas as pd
@@ -295,7 +297,7 @@ def extract_hobbies(text):
 
 
     record5 = 'involments'
-    
+
     if record5:
         text1 = re.findall(record5, test_str, flags=re.IGNORECASE)
         if text1:
@@ -305,6 +307,54 @@ def extract_hobbies(text):
             if sub2:
                 return sub2
 
+
+
+
+def parse_date(x, fmts=("%b %Y", "%B %Y")):
+    for fmt in fmts:
+        try:
+            return datetime.strptime(x, fmt)
+        except ValueError:
+            pass
+def total_extract_experience(text):
+    months = "|".join(calendar.month_abbr[1:] + calendar.month_name[1:])
+    pattern = fr"(?i)((?:{months}) *\d{{4}}) *(?:-|–) *(present|(?:{months}) *\d{{4}})"
+    total_experience = None
+
+    for start, end in re.findall(pattern, text):
+        if end.lower() == "present":
+            today = datetime.today()
+            end = f"{calendar.month_abbr[today.month]} {today.year}"
+
+        duration = relativedelta(parse_date(end), parse_date(start))
+
+        if total_experience:
+            total_experience += duration
+        else:
+            total_experience = duration
+
+        # print(f"{start}-{end} ({duration.years} years, {duration.months} months)")
+
+    if total_experience:
+        return f"{total_experience.years} years, {total_experience.months} months"
+        # print(f"total experience:  {total_experience.years} years, {total_experience.months} months")
+
+    else:
+        text = text.lower()
+        list = text.split('experience')
+        if len(list) > 1:
+            match = re.findall(r'(?<!\d)\d{4}(?!\d)', list[1])
+            indx = []
+            for i in match:
+                li = match.index(i)
+                indx.append(li)
+            year = "".join(match[min(indx)])
+            date1 = "January " + year
+            date2 = "present"
+
+            return get_number_of_months_from_dates(date1, date2)
+        else:
+            return 0
 
 def get_total_experience(experience_list):
     '''

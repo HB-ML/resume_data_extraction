@@ -41,6 +41,7 @@ class ResumeParser(object):
         skills = utils.extract_skills(self.__nlp, self.__noun_chunks)
         edu = utils.extract_education([sent.string.strip() for sent in self.__nlp.sents])
         experience = utils.extract_experience(self.__text)
+        total_experience = utils.total_extract_experience(self.__text)
         hobbies = utils.extract_hobbies(self.__text)
         entities = utils.extract_entity_sections(self.__text_raw)
         dates = list(datefinder.find_dates(self.__text_raw))
@@ -52,7 +53,7 @@ class ResumeParser(object):
         # self.__details['education'] = entities['education']
         self.__details['education'] = edu
         self.__details['experience'] = experience
-        self.__details['total_experience'] = 0
+        self.__details['total_experience'] = total_experience
         self.__details['hobbies'] = hobbies
         try:
             self.__details['competencies'] = utils.extract_competencies(self.__text_raw, entities['experience'])
