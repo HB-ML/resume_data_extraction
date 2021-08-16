@@ -1,8 +1,7 @@
 # ResumeParser
 A simple Resume Parser used for extracting information from Resumes/CVs
 
-Note: This is just a wrapper around the pyresparser. The actual source code for the parsing can be found here: [https://github.com/OmkarPathak/pyresparser](https://github.com/OmkarPathak/pyresparser)
-
+Note: This is just a wrapper around the pyresparser
 # Installation
 
 ```bash
