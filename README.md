@@ -51,6 +51,7 @@ The module would return a list of dictionary objects with result as follows:
         'email': 'omkarpathak27@gmail.com',
         'mobile_number': '8087996634',
         'name': 'Omkar Pathak',
+        'hobbies' : 'music'
         'skills': [
             'Flask',
             'Django',
@@ -75,7 +76,7 @@ The module would return a list of dictionary objects with result as follows:
 
 - [x] Extracting Experience
 - [ ] Extracting Projects
-- [ ] Extracting hobbies
+- [x] Extracting hobbies
 - [ ] Extracting universities
 - [ ] Extracting month of passing
 - [ ] Extracting Awards/ Achievements/ Recognition

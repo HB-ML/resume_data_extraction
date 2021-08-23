@@ -46,7 +46,7 @@ def extract_text_from_pdf(pdf_path):
             converter.close()
             fake_file_handle.close()
 
-def extract_text_from_doc(doc_path):
+def extract_text_from_docx(doc_path):
     '''
     Helper function to extract plain text from .doc or .docx files
 
@@ -56,6 +56,13 @@ def extract_text_from_doc(doc_path):
     temp = docx2txt.process(doc_path)
     text = [line.replace('\t', ' ') for line in temp.split('\n') if line]
     return ' '.join(text)
+
+
+def extract_text_from_doc(doc_path):
+    import textract
+    text = textract.process(doc_path).decode('utf-8')
+    return text
+
 
 def extract_text(file_path, extension):
     '''
@@ -68,9 +75,15 @@ def extract_text(file_path, extension):
     if extension == '.pdf':
         for page in extract_text_from_pdf(file_path):
             text += ' ' + page
-    elif extension == '.docx' or extension == '.doc':
+            return text
+    elif extension == '.docx':
+        text = extract_text_from_docx(file_path)
+        return text
+
+    elif extension == '.doc':
         text = extract_text_from_doc(file_path)
-    return text
+        return text
+
 
 def extract_entity_sections(text):
     '''
